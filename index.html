@@ -7,7 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -295,7 +295,7 @@
         // Инициализация Supabase (новый проект DISC Admin)
         const supabaseUrl = 'https://uetzaqqtfwgqytgqvpct.supabase.co';
         const supabaseKey = 'sb_publishable_f4Yz_Xr7vCf6yKyUUB1lVA_XXIvJMOu';
-        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+        const supabaseApp = window.supabase.createClient(supabaseUrl, supabaseKey);
 
         // Interpretations Dictionary (Tatyana Shcherban - Result through Others)
         const discInterpretations = {
@@ -370,7 +370,7 @@
                 tbody.innerHTML = '<tr><td colspan="4" class="text-center py-10 font-bold text-slate-500 animate-pulse">Идет загрузка из базы данных Supabase...</td></tr>';
                 emptyState.classList.add('hidden');
 
-                const { data, error } = await supabase.from('disc_tests').select('*').order('created_at', { ascending: false });
+                const { data, error } = await supabaseApp.from('disc_tests').select('*').order('created_at', { ascending: false });
                 if(error) throw error;
                 
                 employees = data.map(d => ({
@@ -533,7 +533,7 @@
             submitBox.innerHTML = '<div class="py-8"><div class="w-12 h-12 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin mx-auto"></div><p class="mt-4 font-bold text-slate-600">Сохранение в базу данных...</p></div>';
 
             try {
-                const { error } = await supabase.from('disc_tests').insert({
+                const { error } = await supabaseApp.from('disc_tests').insert({
                     name: name,
                     role: role || "Не указана",
                     primary_type: finalResult.primary,
@@ -634,7 +634,7 @@
         async function deleteEmployee(id) { 
             if(!confirm('Удалить профиль кандидата из базы данных?')) return;
             try {
-                await supabase.from('disc_tests').delete().eq('id', id);
+                await supabaseApp.from('disc_tests').delete().eq('id', id);
                 await loadEmployees();
             } catch(e) {
                 alert("Ошибка: " + e.message);
@@ -644,7 +644,7 @@
         async function clearHistory() {
             if(confirm('Удалить все результаты из базы данных? Это необратимо!')) {
                 try {
-                    await supabase.from('disc_tests').delete().neq('id', 0);
+                    await supabaseApp.from('disc_tests').delete().neq('id', 0);
                     await loadEmployees();
                 } catch(e) { 
                     alert("Ошибка очистки: " + e.message); 
