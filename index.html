@@ -236,18 +236,6 @@
                     <h1 class="text-3xl font-extrabold tracking-tight text-slate-900 flex items-center gap-3">
                         Входящие профили
                     </h1>
-                    <p class="mt-2 text-sm text-slate-500">
-                        Расшифровка составлена строго по методологии Т. Щербань («Результат чужими руками»). 
-                    </p>
-                </div>
-                <div class="flex gap-3">
-                    <button onclick="generateLink()" class="inline-flex items-center gap-2 bg-emerald-50 text-emerald-700 hover:bg-emerald-100 px-5 py-2.5 rounded-xl font-semibold transition-all border border-emerald-200 active:scale-95">
-                        <i data-lucide="copy" class="w-4 h-4"></i>
-                        Копировать ссылку на тест
-                    </button>
-                    <button onclick="clearHistory()" class="inline-flex items-center gap-2 bg-white hover:bg-slate-50 text-rose-600 border border-slate-200 px-5 py-2.5 rounded-xl font-semibold transition-all active:scale-95">
-                        Очистить
-                    </button>
                 </div>
             </header>
 
@@ -383,12 +371,14 @@
                 }));
                 renderDashboard();
             } catch(e) {
-                if(e.message.includes('relation "public.disc_tests" does not exist')) {
+                const errMsg = e.message || JSON.stringify(e);
+                if(errMsg.includes('relation "public.disc_tests" does not exist')) {
                     document.getElementById('employee-table-body').innerHTML = '';
                     document.getElementById('empty-state').classList.remove('hidden');
                     document.getElementById('empty-state').classList.add('flex');
                     document.getElementById('empty-state').innerHTML = `<div class="bg-rose-50 text-rose-600 p-6 rounded-xl border border-rose-200 mt-10"><p class="font-bold text-lg mb-2">Таблица disc_tests пока не создана!</p><p class="text-sm border-t border-rose-200 pt-2 mt-2">Скопируйте SQL-скрипт из чата и выполните его в Supabase SQL Editor.</p></div>`;
                 } else {
+                    document.getElementById('employee-table-body').innerHTML = `<tr><td colspan="4" class="text-center py-10"><div class="text-rose-600 font-bold mb-2">Не удалось подключиться к базе данных.</div><div class="text-slate-500 text-sm mb-4">${errMsg}</div><div class="text-xs text-slate-400 bg-slate-50 p-4 rounded-lg inline-block text-left">* Если вы видите "Failed to fetch", скорее всего работает блокировщик рекламы или Kaspersky, который блокирует запросы к Supabase.</div></td></tr>`;
                     console.error("Fetch error", e);
                 }
             }
