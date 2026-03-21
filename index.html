@@ -91,6 +91,23 @@
 
     <main class="flex-grow flex flex-col items-center p-3 sm:p-8 w-full overflow-hidden">
         
+        <!-- VIEW: LOGIN (ADMIN ONLY) -->
+        <div id="view-login" class="hidden w-full max-w-sm mx-auto flex flex-col items-center pt-24 animate-slide-up text-center">
+            <div class="w-20 h-20 bg-slate-100 rounded-3xl flex items-center justify-center mb-6 shadow-inner mx-auto">
+                <i data-lucide="lock" class="w-10 h-10 text-slate-800"></i>
+            </div>
+            <h1 class="text-2xl font-extrabold text-slate-900 mb-2">Админ-панель</h1>
+            <p class="text-slate-500 mb-8 text-sm">Введите пароль для доступа к базе кандидатов</p>
+            
+            <input type="password" id="admin-password" placeholder="Пароль" class="w-full text-center px-4 py-4 rounded-xl border-2 border-slate-200 focus:border-slate-800 focus:ring-4 focus:ring-slate-100 transition-all mb-2 font-bold tracking-[0.5em] text-xl outline-none" onkeypress="if(event.key==='Enter') loginAdmin()">
+            
+            <p id="login-error" class="text-rose-500 font-bold mb-6 text-sm h-5 transition-opacity opacity-0">Неверный пароль!</p>
+            
+            <button onclick="loginAdmin()" class="w-full bg-slate-900 text-white rounded-xl py-4 font-bold shadow-md hover:bg-slate-800 transition-all active:scale-95 flex items-center justify-center gap-2">
+                Войти <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </button>
+        </div>
+
         <!-- VIEW: START (CANDIDATE ONLY) -->
         <div id="view-start" class="hidden w-full max-w-2xl mx-auto flex flex-col items-center justify-center pt-10 sm:pt-16 animate-slide-up text-center">
             <div class="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center mb-6 shadow-sm transform -rotate-3">
@@ -344,12 +361,26 @@
                 document.getElementById('nav-candidate').classList.add('flex');
                 switchView('start');
             } else {
-                document.getElementById('nav-admin').classList.remove('hidden');
-                document.getElementById('nav-admin').classList.add('flex');
-                switchView('dashboard');
-                await loadEmployees();
+                switchView('login');
             }
         };
+
+        const ADMIN_PIN = "7777"; // Вы можете поменять этот пароль на свой!
+
+        function loginAdmin() {
+            const val = document.getElementById('admin-password').value;
+            const err = document.getElementById('login-error');
+            if(val === ADMIN_PIN) {
+                err.classList.add('opacity-0');
+                document.getElementById('nav-admin').classList.remove('hidden');
+                document.getElementById('nav-admin').classList.add('flex');
+                
+                switchView('dashboard');
+                loadEmployees();
+            } else {
+                err.classList.remove('opacity-0');
+            }
+        }
 
         async function loadEmployees() {
             try {
@@ -388,7 +419,7 @@
         }
 
         function switchView(view) {
-            ['view-start', 'view-test', 'view-results', 'view-dashboard'].forEach(v => {
+            ['view-login', 'view-start', 'view-test', 'view-results', 'view-dashboard'].forEach(v => {
                 document.getElementById(v).classList.add('hidden');
             });
             document.getElementById(`view-${view}`).classList.remove('hidden');
