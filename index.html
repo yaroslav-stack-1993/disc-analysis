@@ -117,7 +117,7 @@
                 Тестирование рабочего стиля
             </h1>
             <p class="text-lg text-slate-600 mb-8 max-w-lg mx-auto">
-                Ответьте на 15 вопросов, чтобы мы лучше поняли ваш подход к задачам и подобрали оптимальную роль в команде.
+                Ответьте на 60 вопросов, чтобы мы составили максимально точный профиль вашего рабочего стиля.
             </p>
             <div class="bg-white border border-slate-200 p-6 rounded-2xl max-w-md w-full shadow-sm text-left mb-8">
                 <h3 class="font-bold text-slate-800 mb-3 flex items-center gap-2">
@@ -149,7 +149,7 @@
             <!-- Progress -->
             <div class="mb-6">
                 <div class="flex justify-between items-end mb-2">
-                    <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Шаг <span id="q-current" class="text-slate-800">1</span> из 15</span>
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Шаг <span id="q-current" class="text-slate-800">1</span> из 60</span>
                     <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded" id="q-progress-text">0%</span>
                 </div>
                 <div class="w-full bg-slate-200 rounded-full h-2 overflow-hidden">
@@ -262,8 +262,8 @@
                         <thead>
                             <tr class="bg-slate-50 border-b border-slate-200 text-xs font-bold text-slate-500 uppercase tracking-wider">
                                 <th class="px-6 py-4 w-1/4">Кандидат / Роль</th>
-                                <th class="px-6 py-4 w-40">Тип профиля</th>
-                                <th class="px-6 py-4">Кратко (Основа)</th>
+                                <th class="px-6 py-4 min-w-[200px]">Сдвиг: Маска ➡️ Стресс</th>
+                                <th class="px-6 py-4">Кратко (Адаптация)</th>
                                 <th class="px-6 py-4 w-28 text-right">Действия</th>
                             </tr>
                         </thead>
@@ -294,6 +294,7 @@
         </div>
     </div>
 
+    <script src="questions.js"></script>
     <script>
         lucide.createIcons();
 
@@ -330,23 +331,7 @@
             }
         };
 
-        const proQuestions = [
-            [{ t: "Беру ответственность за сложные решения", type: "D" }, { t: "Легко завожу новые полезные знакомства", type: "I" }, { t: "Предпочитаю работать в предсказуемом темпе", type: "S" }, { t: "Строго следую инструкциям и регламентам", type: "C" }],
-            [{ t: "Сразу перехожу к сути дела без долгих вступлений", type: "D" }, { t: "Поддерживаю позитивную атмосферу в коллективе", type: "I" }, { t: "Всегда готов терпеливо выслушать коллегу", type: "S" }, { t: "Внимательно проверяю каждую деталь перед сдачей", type: "C" }],
-            [{ t: "Не боюсь конфликтов, если уверен в своей правоте", type: "D" }, { t: "Умею убеждать коллег своими идеями", type: "I" }, { t: "Ценю стабильность и долгосрочные отношения", type: "S" }, { t: "Опираюсь только на логику, факты и цифры", type: "C" }],
-            [{ t: "Ставлю амбициозные цели и стремлюсь побеждать", type: "D" }, { t: "Люблю быть в центре внимания и общаться", type: "I" }, { t: "Сглаживаю острые углы и избегаю споров", type: "S" }, { t: "Досконально изучаю всю информацию до выводов", type: "C" }],
-            [{ t: "Требователен к результатам — своим и чужим", type: "D" }, { t: "Открыто и бурно выражаю свои эмоции", type: "I" }, { t: "На меня всегда можно положиться в рутине", type: "S" }, { t: "Просчитываю все возможные риски до старта", type: "C" }],
-            [{ t: "Беру инициативу в свои руки в кризисных ситуациях", type: "D" }, { t: "Обладаю даром убеждения и личным обаянием", type: "I" }, { t: "Сохраняю преданность компании годами", type: "S" }, { t: "Выстраиваю работу по четкой и понятной системе", type: "C" }],
-            [{ t: "Нацелен на быстрое достижение результата", type: "D" }, { t: "Мотивирую окружающих своим энтузиазмом", type: "I" }, { t: "С пониманием отношусь к чужим ошибкам", type: "S" }, { t: "Подвергаю любую идею глубокому анализу", type: "C" }],
-            [{ t: "Настойчиво добиваюсь своего, несмотря на преграды", type: "D" }, { t: "Легко отношусь к неудачам, сохраняя позитив", type: "I" }, { t: "Не люблю, когда планы меняются в последний момент", type: "S" }, { t: "Проявляю педантичность в оформлении задач", type: "C" }],
-            [{ t: "Люблю сложные вызовы и задачи со звездочкой", type: "D" }, { t: "Мотивируюсь публичной похвалой и признанием", type: "I" }, { t: "Создаю миролюбивую и спокойную обстановку", type: "S" }, { t: "Испытываю дискомфорт, если кто-то нарушает правила", type: "C" }],
-            [{ t: "Готов идти на осознанный риск ради выгоды", type: "D" }, { t: "Быстро нахожу общие темы для разговора с любым", type: "I" }, { t: "Являюсь отличным и внимательным слушателем", type: "S" }, { t: "Всегда составляю подробный план действий", type: "C" }],
-            [{ t: "Органично чувствую себя в роли руководителя", type: "D" }, { t: "Щедро делюсь энергией и воодушевляю команду", type: "I" }, { t: "Ставлю интересы команды выше личных амбиций", type: "S" }, { t: "Как перфекционист, не допускаю брака в работе", type: "C" }],
-            [{ t: "Предпочитаю работать независимо и автономно", type: "D" }, { t: "Эмоционально вовлекаюсь в проблемы коллег", type: "I" }, { t: "Ценю понятные, выполнимые задачи без сюрпризов", type: "S" }, { t: "Требую четких и обоснованных критериев оценки", type: "C" }],
-            [{ t: "Смело пробую новые, нестандартные подходы", type: "D" }, { t: "Ярко и выразительно презентую свои результаты", type: "I" }, { t: "Способен искренне сочувствовать и поддерживать", type: "S" }, { t: "Проявляю крайнюю осмотрительность в решениях", type: "C" }],
-            [{ t: "Жестко отстаиваю свою позицию на совещаниях", type: "D" }, { t: "Люблю импровизировать и действовать спонтанно", type: "I" }, { t: "Уступаю в мелких спорах ради хороших отношений", type: "S" }, { t: "Требую подтверждения любых заявлений фактами", type: "C" }],
-            [{ t: "Оцениваю людей только по их эффективности", type: "D" }, { t: "Вношу долю юмора и легкости в рабочий процесс", type: "I" }, { t: "Глубоко сопереживаю трудностям каждого в коллективе", type: "S" }, { t: "Веду дела дипломатично, ссылаясь на стандарты", type: "C" }]
-        ];
+        // const proQuestions загружается из questions.js
 
         let employees = []; 
         let currentAnswers = []; 
@@ -534,15 +519,25 @@
         }
 
         function calculateResults() {
-            let scores = { D: 0, I: 0, S: 0, C: 0 };
+            let scoreMost = { D: 0, I: 0, S: 0, C: 0 };
+            let scoreLeast = { D: 0, I: 0, S: 0, C: 0 };
+
             currentAnswers.forEach(ans => {
-                if(ans.most) scores[ans.most] += 1;
-                if(ans.least) scores[ans.least] -= 1;
+                if(ans.most) scoreMost[ans.most] += 1;
+                if(ans.least) scoreLeast[ans.least] += 1;
             });
-            const sorted = Object.entries(scores).sort((a,b) => b[1] - a[1]);
+
+            // Маска - максимальное количество выборов "ПРО МЕНЯ"
+            const sortedMost = Object.entries(scoreMost).sort((a,b) => b[1] - a[1]);
+            const maskProfile = sortedMost[0][0];
+
+            // Стресс - минимальное количество выборов "НЕ МОЁ" (отвергается реже всего)
+            const sortedLeast = Object.entries(scoreLeast).sort((a,b) => a[1] - b[1]);
+            const stressProfile = sortedLeast[0][0];
+
             finalResult = {
-                primary: sorted[0][0],
-                secondary: sorted[1][1] > -2 ? sorted[1][0] : "" 
+                primary: maskProfile,    // Сохраняем Маску
+                secondary: stressProfile // Сохраняем Стресс
             };
             switchView('results'); // Show just the input form for candidate
         }
@@ -593,22 +588,29 @@
             emptyState.classList.remove('flex');
 
             tbody.innerHTML = employees.map(emp => {
-                const pData = discInterpretations[emp.primary];
-                const sData = emp.secondary ? discInterpretations[emp.secondary] : null;
+                const maskData = discInterpretations[emp.primary] || discInterpretations['D'];
+                const stressData = emp.secondary ? discInterpretations[emp.secondary] : null;
+                const hasShift = emp.secondary && emp.primary !== emp.secondary;
 
                 let typeHtml = `<div class="flex gap-2 items-center">`;
-                typeHtml += `<span class="${pData.badgeClass} px-3 py-1.5 rounded-lg font-extrabold text-sm shadow-sm whitespace-nowrap">${pData.titleShort}</span>`;
-                if(sData) typeHtml += `<span class="text-slate-300 font-bold">+</span><span class="${sData.badgeClass} px-3 py-1.5 rounded-lg font-bold text-xs shadow-sm opacity-90">${sData.titleShort}</span>`;
+                typeHtml += `<span class="${maskData.badgeClass} px-2 py-1 rounded-lg font-extrabold text-xs shadow-sm whitespace-nowrap" title="Маска (На работе)">${maskData.titleShort}</span>`;
+                if(stressData) {
+                    if(hasShift) {
+                        typeHtml += `<span class="text-slate-300 font-bold text-xs">➡️</span><span class="${stressData.badgeClass} px-2 py-1 rounded-lg font-bold text-[10px] shadow-sm opacity-90" title="Стресс (Дома/Кризис)">${stressData.titleShort}</span>`;
+                    } else {
+                        typeHtml += `<span class="text-slate-400 text-[10px] font-bold mt-0.5 ml-1 leading-tight">Без сдвига</span>`;
+                    }
+                }
                 typeHtml += `</div>`;
 
-                let rolesHtml = `<div class="leading-relaxed"><strong class="text-slate-900 block mb-2 text-lg">💼 Подходящие задачи</strong>${pData.jobs}</div>`;
-                if(sData) rolesHtml += `<div class="leading-relaxed mt-3 pt-3 border-t border-slate-200 opacity-90 text-sm"><strong class="text-slate-700 block mb-1">Дополнение:</strong>${sData.jobs}</div>`;
+                let rolesHtml = `<div class="leading-relaxed"><strong class="text-slate-900 block mb-2 text-lg">💼 Маска (Работа)</strong>${maskData.jobs}</div>`;
+                if(hasShift) rolesHtml += `<div class="leading-relaxed mt-3 pt-3 border-t border-slate-200 opacity-90 text-sm"><strong class="text-rose-700 block mb-1">Сдвиг в стрессе (Дома):</strong>${stressData.jobs}</div>`;
 
-                let delHtml = `<div class="leading-relaxed"><strong class="text-emerald-900 block mb-2 text-lg">🎯 Как делегировать</strong>${pData.delegation}</div>`;
-                if(sData) delHtml += `<div class="leading-relaxed mt-3 pt-3 border-t border-emerald-100 opacity-90 text-sm">${sData.delegation}</div>`;
+                let delHtml = `<div class="leading-relaxed"><strong class="text-emerald-900 block mb-2 text-lg">🎯 Делегирование (Маска)</strong>${maskData.delegation}</div>`;
+                if(hasShift) delHtml += `<div class="leading-relaxed mt-3 pt-3 border-t border-emerald-100 opacity-90 text-sm"><strong class="text-rose-800 block mb-1">Падают в стрессе:</strong>${stressData.delegation}</div>`;
 
-                let motHtml = `<div class="leading-relaxed text-blue-900"><strong class="text-blue-900 block mb-2 text-lg">🔥 Мотивация</strong>${pData.motivation}</div>`;
-                if(sData) motHtml += `<div class="leading-relaxed mt-3 pt-3 border-t border-blue-100 opacity-90 text-sm">${sData.motivation}</div>`;
+                let motHtml = `<div class="leading-relaxed text-blue-900"><strong class="text-blue-900 block mb-2 text-lg">🔥 Мотивация (Маска)</strong>${maskData.motivation}</div>`;
+                if(hasShift) motHtml += `<div class="leading-relaxed mt-3 pt-3 border-t border-blue-100 opacity-90 text-sm"><strong class="text-rose-800 block mb-1">Мотивация в кризисе:</strong>${stressData.motivation}</div>`;
 
                 return `
                     <tr class="hover:bg-slate-50 transition-colors group cursor-pointer border-b border-slate-100" onclick="toggleRow(${emp.id})">
@@ -619,7 +621,7 @@
                         </td>
                         <td class="px-6 py-5 align-middle">${typeHtml}</td>
                         <td class="px-6 py-5 align-middle">
-                            <p class="text-sm text-slate-500 line-clamp-2 pr-4">${pData.jobs}</p>
+                            <p class="text-sm text-slate-500 line-clamp-2 pr-4">${maskData.jobs}</p>
                         </td>
                         <td class="px-6 py-5 align-middle text-right">
                             <div class="flex items-center justify-end gap-2">
