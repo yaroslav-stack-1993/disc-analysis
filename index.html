@@ -252,7 +252,13 @@
                 <div>
                     <h1 class="text-3xl font-extrabold tracking-tight text-slate-900 flex items-center gap-3">
                         Входящие профили
+                        <button onclick="addDemoUser()" class="ml-4 text-xs bg-emerald-100 text-emerald-700 px-3 py-1.5 rounded-lg hover:bg-emerald-200 transition-colors hidden sm:inline-block font-bold">
+                            + Сгенерировать демо-кандидата
+                        </button>
                     </h1>
+                    <button onclick="addDemoUser()" class="mt-2 text-xs bg-emerald-100 text-emerald-700 px-3 py-1.5 rounded-lg hover:bg-emerald-200 transition-colors sm:hidden w-full font-bold">
+                        + Сгенерировать демо-кандидата
+                    </button>
                 </div>
             </header>
 
@@ -746,6 +752,28 @@
                 } catch(e) { 
                     alert("Ошибка очистки: " + e.message); 
                 }
+            }
+        }
+
+        async function addDemoUser() {
+            try {
+                const tMsg = document.getElementById('toast-msg');
+                tMsg.innerText = "Генерация демо-кандидата...";
+                showToast();
+
+                // Вставляем реалистичный смешанный профиль
+                await supabaseApp.from('disc_tests').insert({
+                    name: "Кандидат (Смешанный I/S)",
+                    role: "Демо-профиль",
+                    primary_type: "I/S#12,31,15,2",
+                    secondary_type: "D/C#8,23,17,12"
+                });
+                
+                tMsg.innerText = "Успешно!";
+                showToast();
+                await loadEmployees();
+            } catch(e) {
+                alert("Ошибка генерации: " + e.message);
             }
         }
 
